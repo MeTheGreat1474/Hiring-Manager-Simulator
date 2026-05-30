@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#1A1A1A</color>
+    <color name="bg_panel">#1F1F1F</color>
+    <color name="bg_ui">#252525</color>
+    <color name="primary">#BD322C</color>
+    <color name="primary_dark">#8A1F1A</color>
+    <color name="secondary">#E6D5B8</color>
+    <color name="secondary_dim">#A8957A</color>
+    <color name="tertiary">#3D5A45</color>
+    <color name="tertiary_dark">#263A2C</color>
+    <color name="border_accent">#BD322C</color>
+    <color name="border_dark">#2E2E2E</color>
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_dim">#999999</color>
+    <color name="border_gold">#E0E0E0</color>
+    <color name="highlight_yellow">#E0E0E0</color>
+    <color name="tab_bg">#252525</color>
+    <color name="paper_bg">#FFFFFF</color>
+    <color name="paper_text">#1A1A1A</color>
+    <color name="paper_line">#8FBCD8</color>
+    <color name="paper_section">#D6E8F5</color>
+    <color name="stamp_approve">#3D5A45</color>
+    <color name="stamp_reject">#BD322C</color>
+    <color name="btn_approve_bg">#3D5A45</color>
+    <color name="btn_reject_bg">#BD322C</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
