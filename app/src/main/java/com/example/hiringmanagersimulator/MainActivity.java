@@ -3,6 +3,7 @@ package com.example.hiringmanagersimulator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -181,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
         tvDayNumber.setText("Day " + day);
         tvBonus.setText("RM 0.00");
 
-        tvRulesDay.setText("OBJECTIVES - DAY " + day);
-        tvRulesList.setText(buildRulesText(config));
+        tvRulesDay.setVisibility(View.GONE);
+        tvRulesList.setText(Html.fromHtml(buildRulesText(config), Html.FROM_HTML_MODE_LEGACY));
 
         updateMistakesDisplay();
         updateStats();
@@ -235,15 +236,22 @@ public class MainActivity extends AppCompatActivity {
     private String buildRulesText(DayConfig config) {
         StringBuilder sb = new StringBuilder();
         for (Rule r : config.getRules()) {
-            sb.append(">  ").append(r.getLabel().toUpperCase()).append("\n");
+            sb.append("<b><font color='#4DB868'>")
+              .append("&#8226;  ")
+              .append(r.getLabel().toUpperCase())
+              .append("</font></b><br/>");
             if (r instanceof Rules.UniversityRule) {
+                int n = 1;
                 for (String u : ((Rules.UniversityRule) r).accepted) {
-                    sb.append("     - ").append(u).append("\n");
+                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(u).append("<br/>");
                 }
             } else if (r instanceof Rules.SkillRule) {
-                sb.append("     ").append(String.join(" / ", ((Rules.SkillRule) r).required)).append("\n");
+                int n = 1;
+                for (String s : ((Rules.SkillRule) r).required) {
+                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(s).append("<br/>");
+                }
             }
-            sb.append("\n");
+            sb.append("<br/>");
         }
         return sb.toString().trim();
     }
