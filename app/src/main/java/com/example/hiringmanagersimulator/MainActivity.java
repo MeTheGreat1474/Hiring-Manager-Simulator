@@ -1,5 +1,6 @@
 package com.example.hiringmanagersimulator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvEndTitle, tvEndBody;
     private AppCompatButton btnEndAction;
     private AppCompatButton btnApprove, btnReject;
+    private TextView tvTimer;
+    private android.os.CountDownTimer countDownTimer;
 
     // ─── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         btnEndAction            = findViewById(R.id.btn_end_action);
         btnApprove              = findViewById(R.id.btn_approve);
         btnReject               = findViewById(R.id.btn_reject);
+        tvTimer                 = findViewById(R.id.tv_timer_right);
     }
 
     // ─── Panel setup ───────────────────────────────────────────────────────────
@@ -195,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             startDay(currentDay + 1);
         });
 
+        startTimer(config.timeLimitSeconds);
         showBriefing(config);
     }
 
@@ -245,10 +250,15 @@ public class MainActivity extends AppCompatActivity {
                 for (String u : ((Rules.UniversityRule) r).accepted) {
                     sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(u).append("<br/>");
                 }
-            } else if (r instanceof Rules.SkillRule) {
+            } else if (r instanceof Rules.BlacklistRule) {
                 int n = 1;
-                for (String s : ((Rules.SkillRule) r).required) {
-                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(s).append("<br/>");
+                for (String c : ((Rules.BlacklistRule) r).companies) {
+                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(c).append("<br/>");
+                }
+            } else if (r instanceof Rules.GradeRule) {
+                int n = 1;
+                for (String g : ((Rules.GradeRule) r).accepted) {
+                    sb.append("&nbsp;&nbsp;&nbsp;&nbsp;").append(n++).append(". ").append(g).append("<br/>");
                 }
             }
             sb.append("<br/>");
@@ -269,7 +279,19 @@ public class MainActivity extends AppCompatActivity {
                     sb.append("       • ").append(u).append("\n");
                 }
             } else if (r instanceof Rules.SkillRule) {
-                sb.append("       ").append(String.join("  /  ", ((Rules.SkillRule) r).required)).append("\n");
+                for (String s : ((Rules.SkillRule) r).required) {
+                    sb.append("       • ").append(s).append("\n");
+                }
+            } else if (r instanceof Rules.BlacklistRule) {
+                int n = 1;
+                for (String c : ((Rules.BlacklistRule) r).companies) {
+                    sb.append("       ").append(n++).append(". ").append(c).append("\n");
+                }
+            } else if (r instanceof Rules.GradeRule) {
+                int n = 1;
+                for (String g : ((Rules.GradeRule) r).accepted) {
+                    sb.append("       ").append(n++).append(". ").append(g).append("\n");
+                }
             }
             sb.append("\n");
         }
@@ -278,10 +300,50 @@ public class MainActivity extends AppCompatActivity {
 
         // ─── Day briefing ──────────────────────────────────────────────────────────
 
+    private void startTimer(int seconds) {
+        if (countDownTimer != null) { countDownTimer.cancel(); countDownTimer = null; }
+        if (seconds <= 0) {
+            tvTimer.setVisibility(View.INVISIBLE);
+            return;
+        }
+        tvTimer.setVisibility(View.VISIBLE);
+        tvTimer.setText(formatTime(seconds));
+        countDownTimer = new android.os.CountDownTimer(seconds * 1000L, 1000) {
+            @Override public void onTick(long ms) {
+                int remaining = (int)(ms / 1000);
+                tvTimer.setText(formatTime(remaining));
+                tvTimer.setTextColor(remaining <= 30
+                        ? 0xFFFF6B6B   // red when low
+                        : ContextCompat.getColor(MainActivity.this, R.color.highlight_yellow));
+            }
+            @Override public void onFinish() {
+                tvTimer.setText("00:00");
+                tvTimer.setTextColor(0xFFFF6B6B);
+                showGameOver();
+            }
+        }.start();
+    }
+
+    private String formatTime(int totalSeconds) {
+        int m = totalSeconds / 60;
+        int s = totalSeconds % 60;
+        return String.format(Locale.US, "%02d:%02d", m, s);
+    }
+
     private void showBriefing(DayConfig config) {
         tvBriefingDay.setText("DAY " + config.dayNumber + " BRIEFING");
 
         tvBriefingRules.setText(buildBriefingText(config));
+
+        // Cap the scroll area: hug content up to a max of 280dp
+        android.widget.ScrollView briefingScroll = findViewById(R.id.briefing_scroll);
+        final int maxPx = dp(280);
+        briefingScroll.post(() -> {
+            int contentH = tvBriefingRules.getHeight();
+            android.view.ViewGroup.LayoutParams lp = briefingScroll.getLayoutParams();
+            lp.height = Math.min(contentH, maxPx);
+            briefingScroll.setLayoutParams(lp);
+        });
 
         briefingOverlay.setVisibility(View.VISIBLE);
 
@@ -328,14 +390,14 @@ public class MainActivity extends AppCompatActivity {
     private void addJobView(JobEntry job) {
         // Company + location row
         LinearLayout row1 = hRow();
-        row1.addView(boldText(job.company.toUpperCase(), 10, 1f));
-        row1.addView(boldText(job.location, 10, 0f));
+        row1.addView(boldText(job.company.toUpperCase(), 13, 1f));
+        row1.addView(boldText(job.location, 13, 0f));
         containerJobs.addView(row1);
 
         // Title + date row
         LinearLayout row2 = hRow();
-        row2.addView(italicText(job.title, 10, true, 1f));
-        row2.addView(italicText(job.dateRange(), 10, false, 0f));
+        row2.addView(italicText(job.title, 13, true, 1f));
+        row2.addView(italicText(job.dateRange(), 13, false, 0f));
         containerJobs.addView(row2);
 
         // Bullets — use MATCH_PARENT width, not weight
@@ -345,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             tv.setText("•  " + bullet);
-            tv.setTextSize(11);
+            tv.setTextSize(13);
             tv.setTextColor(ContextCompat.getColor(this, R.color.paper_text));
             tv.setPadding(dp(4), 0, 0, dp(2));
             tv.setLineSpacing(dp(1), 1f);
@@ -372,18 +434,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showGameOver() {
-        tvEndTitle.setText("YOU'RE FIRED");
-        tvEndBody.setText(
-                "Too many violations approved.\n\n" +
-                "CORRECT       : " + session.getCorrectCount() + "\n" +
-                "MISTAKES      : " + session.getMistakeCount() + "\n" +
-                "DAYS SURVIVED : " + currentDay);
-        btnEndAction.setText("TRY AGAIN");
-        btnEndAction.setOnClickListener(v -> {
-            endOverlay.setVisibility(View.GONE);
-            startDay(1);
-        });
-        endOverlay.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, GameOverActivity.class);
+        intent.putExtra(GameOverActivity.EXTRA_CORRECT,  session.getCorrectCount());
+        intent.putExtra(GameOverActivity.EXTRA_MISTAKES, session.getMistakeCount());
+        intent.putExtra(GameOverActivity.EXTRA_DAYS,     currentDay);
+        intent.putExtra(GameOverActivity.EXTRA_BONUS,    session.calculateDailyBonus());
+        startActivity(intent);
+        finish();
     }
 
     // ─── Stats helpers ─────────────────────────────────────────────────────────

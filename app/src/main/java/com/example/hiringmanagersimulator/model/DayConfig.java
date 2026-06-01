@@ -47,6 +47,23 @@ public class DayConfig {
     };
 
     /**
+     * Blacklisted companies used from Day 5 onward.
+     * Applicants whose most recent employer matches one of these must be rejected.
+     */
+    public static final String[] BLACKLISTED_COMPANIES = {
+            "RedFlag Corp", "Nexus Offshore Ltd", "ShadowTech Ventures",
+            "Phantom Solutions", "DarkHorse Analytics"
+    };
+
+    /**
+     * Required seniority grades used from Day 6 onward.
+     * Applicants must have an actualGrade matching one of these.
+     */
+    public static final String[] REQUIRED_GRADES = {
+            "SENIOR I", "SENIOR II", "PRINCIPAL"
+    };
+
+    /**
      * Day progression:
      *   Day 1 — min 3 yrs experience only, 3 mistakes, no timer
      *   Day 2 — min 5 yrs experience, 3 mistakes, no timer
@@ -59,26 +76,26 @@ public class DayConfig {
     public static DayConfig forDay(int day) {
         switch (day) {
             case 1:
-                return new DayConfig(1, 3, 0, 3,
+                return new DayConfig(1, 1, 0, 3,
                         Arrays.asList(
                                 Rules.minimumExperience(3)
                         ));
 
             case 2:
-                return new DayConfig(2, 4, 0, 3,
+                return new DayConfig(2, 1, 0, 3,
                         Arrays.asList(
                                 Rules.minimumExperience(5)
                         ));
 
             case 3:
-                return new DayConfig(3, 4, 0, 2,
+                return new DayConfig(3, 1, 0, 2,
                         Arrays.asList(
                                 Rules.minimumExperience(5),
                                 Rules.targetUniversity(ACCEPTED_UNIVERSITIES)
                         ));
 
             case 4:
-                return new DayConfig(4, 4, 0, 2,
+                return new DayConfig(4, 1, 0, 2,
                         Arrays.asList(
                                 Rules.minimumExperience(5),
                                 Rules.targetUniversity(ACCEPTED_UNIVERSITIES),
@@ -86,33 +103,34 @@ public class DayConfig {
                         ));
 
             case 5:
-                return new DayConfig(5, 5, 0, 2,
+                return new DayConfig(5, 1, 0, 2,
                         Arrays.asList(
                                 Rules.minimumExperience(5),
                                 Rules.targetUniversity(ACCEPTED_UNIVERSITIES),
                                 Rules.requireSkill(REQUIRED_SKILLS),
-                                Rules.noBlacklistedCompany()
+                                Rules.noBlacklistedCompany(BLACKLISTED_COMPANIES)
                         ));
 
             case 6:
-                return new DayConfig(6, 5, 300, 2,
+                return new DayConfig(6, 1, 300, 2,
                         Arrays.asList(
                                 Rules.minimumExperience(5),
                                 Rules.targetUniversity(ACCEPTED_UNIVERSITIES),
                                 Rules.requireSkill(REQUIRED_SKILLS),
-                                Rules.noBlacklistedCompany(),
-                                Rules.noPriorOffenses()
+                                Rules.noBlacklistedCompany(BLACKLISTED_COMPANIES),
+                                Rules.requireGrade(REQUIRED_GRADES)
                         ));
 
             default:
-                return new DayConfig(day, 5,
-                        Math.max(180, 300 - (day - 6) * 20), 1,
+                // Day 7: 120s, decreases 15s per day, floor 15s
+                return new DayConfig(day, 1,
+                        Math.max(15, 120 - (day - 7) * 15), 1,
                         Arrays.asList(
                                 Rules.minimumExperience(5),
                                 Rules.targetUniversity(ACCEPTED_UNIVERSITIES),
                                 Rules.requireSkill(REQUIRED_SKILLS),
-                                Rules.noBlacklistedCompany(),
-                                Rules.noPriorOffenses()
+                                Rules.noBlacklistedCompany(BLACKLISTED_COMPANIES),
+                                Rules.requireGrade(REQUIRED_GRADES)
                         ));
         }
     }

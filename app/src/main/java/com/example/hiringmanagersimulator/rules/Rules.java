@@ -39,13 +39,24 @@ public final class Rules {
         };
     }
 
-    public static Rule noBlacklistedCompany() {
-        return new Rule() {
-            @Override public String getLabel() { return "No blacklisted company affiliation"; }
-            @Override public ViolationType evaluate(Applicant a) {
-                return a.fromBlacklistedCompany ? ViolationType.BLACKLISTED_COMPANY : ViolationType.NONE;
-            }
-        };
+    public static BlacklistRule noBlacklistedCompany(String... companies) {
+        return new BlacklistRule(companies);
+    }
+
+    public static class BlacklistRule implements Rule {
+        public final List<String> companies;
+
+        BlacklistRule(String[] companies) {
+            this.companies = Arrays.asList(companies);
+        }
+
+        @Override
+        public String getLabel() { return "No blacklisted company affiliation"; }
+
+        @Override
+        public ViolationType evaluate(Applicant a) {
+            return a.fromBlacklistedCompany ? ViolationType.BLACKLISTED_COMPANY : ViolationType.NONE;
+        }
     }
 
     // ─── University ────────────────────────────────────────────────────────────
@@ -103,7 +114,7 @@ public final class Rules {
 
         @Override
         public String getLabel() {
-            return "Must have: " + String.join(" / ", required);
+            return "Must have one of the required skills";
         }
 
         @Override
@@ -143,20 +154,29 @@ public final class Rules {
         };
     }
 
-    public static Rule requireGrade(String... acceptedGrades) {
-        return new Rule() {
-            @Override public String getLabel() {
-                return "Grade required: " + String.join(" / ", acceptedGrades);
+    public static GradeRule requireGrade(String... acceptedGrades) {
+        return new GradeRule(acceptedGrades);
+    }
+
+    public static class GradeRule implements Rule {
+        public final List<String> accepted;
+
+        GradeRule(String[] accepted) {
+            this.accepted = Arrays.asList(accepted);
+        }
+
+        @Override
+        public String getLabel() { return "Minimum seniority grade required:"; }
+
+        @Override
+        public ViolationType evaluate(Applicant a) {
+            for (String g : accepted) {
+                if (g.equalsIgnoreCase(a.actualGrade)) return ViolationType.NONE;
             }
-            @Override public ViolationType evaluate(Applicant a) {
-                for (String g : acceptedGrades) {
-                    if (g.equalsIgnoreCase(a.actualGrade)) return ViolationType.NONE;
-                }
-                return a.displayedGrade.equalsIgnoreCase(a.actualGrade)
-                        ? ViolationType.WRONG_GRADE
-                        : ViolationType.FALSIFIED_GRADE;
-            }
-        };
+            return a.displayedGrade.equalsIgnoreCase(a.actualGrade)
+                    ? ViolationType.WRONG_GRADE
+                    : ViolationType.FALSIFIED_GRADE;
+        }
     }
 
     // ─── Helpers ───────────────────────────────────────────────────────────────

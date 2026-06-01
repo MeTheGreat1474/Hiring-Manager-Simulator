@@ -35,7 +35,7 @@
                     android:text="Day 1"
                     android:textColor="@color/border_gold"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="13sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tv_day_date"
@@ -44,7 +44,7 @@
                     android:text="Mon, 14 Oct"
                     android:textColor="@color/text_dim"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="8sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <TextView
@@ -53,7 +53,7 @@
                 android:text="HIRING DEPT."
                 android:textColor="@color/text_primary"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="12sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -69,7 +69,7 @@
                     android:text="RM 0.00"
                     android:textColor="@color/highlight_yellow"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
                     android:text="Daily Bonus"
                     android:textColor="@color/text_dim"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="8sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -91,15 +91,44 @@
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:paddingEnd="10dp">
+
+            <!-- Spacer to balance timer on the right -->
+            <TextView
+                android:id="@+id/tv_timer"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/highlight_yellow"
+                android:fontFamily="@font/courier_prime"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="start"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_applicant_label"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Applicant #01 of 08"
                 android:textColor="@color/text_dim"
                 android:fontFamily="@font/inter"
-                android:textSize="9sp"
+                android:textSize="14sp"
                 android:gravity="center" />
+
+            <!-- Countdown timer (right side) -->
+            <TextView
+                android:id="@+id/tv_timer_right"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/highlight_yellow"
+                android:fontFamily="@font/courier_prime"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="end"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
         <!-- RESUME SCROLL AREA -->
@@ -130,7 +159,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:gravity="center" />
 
@@ -141,7 +170,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="13sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:paddingTop="2dp" />
@@ -153,7 +182,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="9sp"
+                    android:textSize="13sp"
                     android:gravity="center"
                     android:paddingTop="3dp"
                     android:paddingBottom="10dp" />
@@ -165,7 +194,7 @@
                     android:text="PROFESSIONAL EXPERIENCE"
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <View
@@ -189,7 +218,7 @@
                     android:text="EDUCATION"
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <View
@@ -210,7 +239,7 @@
                         android:text=""
                         android:textColor="@color/paper_text"
                         android:fontFamily="@font/tinos"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                     <TextView
                         android:id="@+id/tv_university_location"
@@ -219,7 +248,7 @@
                         android:text=""
                         android:textColor="@color/paper_text"
                         android:fontFamily="@font/tinos"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -236,7 +265,7 @@
                         android:text=""
                         android:textColor="@color/paper_text"
                         android:fontFamily="@font/tinos"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="italic" />
                     <TextView
                         android:id="@+id/tv_grad_year"
@@ -245,7 +274,7 @@
                         android:text=""
                         android:textColor="@color/paper_text"
                         android:fontFamily="@font/tinos"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="italic" />
                 </LinearLayout>
 
@@ -256,7 +285,7 @@
                     android:text="ADDITIONAL INFORMATION"
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <View
@@ -272,7 +301,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:paddingBottom="3dp"
                     android:lineSpacingExtra="1dp" />
 
@@ -283,7 +312,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:paddingBottom="3dp"
                     android:lineSpacingExtra="1dp" />
 
@@ -294,7 +323,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:paddingBottom="3dp"
                     android:lineSpacingExtra="1dp" />
 
@@ -305,7 +334,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:paddingBottom="3dp"
                     android:lineSpacingExtra="1dp" />
 
@@ -316,7 +345,7 @@
                     android:text=""
                     android:textColor="@color/paper_text"
                     android:fontFamily="@font/tinos"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:paddingBottom="4dp"
                     android:lineSpacingExtra="1dp" />
 
@@ -350,7 +379,7 @@
                 android:background="@drawable/btn_reject"
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:stateListAnimator="@null"
                 android:letterSpacing="0.05" />
@@ -365,7 +394,7 @@
                 android:background="@drawable/btn_approve"
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:stateListAnimator="@null"
                 android:letterSpacing="0.05" />
@@ -379,6 +408,7 @@
     <!-- ═══════════════════════════════════════════════ -->
     <LinearLayout
         android:id="@+id/left_panel"
+        android:visibility="gone"
         android:layout_width="192dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
@@ -396,7 +426,7 @@
             android:text="══ SKILLS ══"
             android:textColor="#5B9BD5"
             android:fontFamily="@font/courier_prime"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:gravity="center"
             android:paddingBottom="8dp" />
@@ -420,7 +450,7 @@
                     android:text="PROGRAMMER"
                     android:textColor="#5B9BD5"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <TextView
@@ -429,7 +459,7 @@
                     android:text="Python · Java · Kotlin\nReact · JavaScript · C++\nDocker · Kubernetes"
                     android:textColor="#CCCCCC"
                     android:fontFamily="@font/inter"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:paddingBottom="8dp" />
 
@@ -440,7 +470,7 @@
                     android:text="DATA ANALYST"
                     android:textColor="#5B9BD5"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <TextView
@@ -449,7 +479,7 @@
                     android:text="Power BI · Excel · SQL\nTableau · Python · R\nSPSS · Google Sheets"
                     android:textColor="#CCCCCC"
                     android:fontFamily="@font/inter"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:paddingBottom="8dp" />
 
@@ -460,7 +490,7 @@
                     android:text="DEVOPS / CLOUD"
                     android:textColor="#5B9BD5"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <TextView
@@ -469,7 +499,7 @@
                     android:text="AWS · GCP · Azure\nDocker · Kubernetes\nTerraform · CI/CD"
                     android:textColor="#CCCCCC"
                     android:fontFamily="@font/inter"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:paddingBottom="8dp" />
 
@@ -480,7 +510,7 @@
                     android:text="ML ENGINEER"
                     android:textColor="#5B9BD5"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <TextView
@@ -489,7 +519,7 @@
                     android:text="TensorFlow · PyTorch\nScikit-learn · Python\nR · Spark · SQL"
                     android:textColor="#CCCCCC"
                     android:fontFamily="@font/inter"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:paddingBottom="8dp" />
 
@@ -500,7 +530,7 @@
                     android:text="MOBILE DEV"
                     android:textColor="#5B9BD5"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:paddingBottom="2dp" />
                 <TextView
@@ -509,7 +539,7 @@
                     android:text="Kotlin · Swift · Java\nFlutter · React Native\nAndroid SDK · iOS SDK"
                     android:textColor="#CCCCCC"
                     android:fontFamily="@font/inter"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:paddingBottom="4dp" />
 
@@ -526,7 +556,7 @@
             android:text="TODAY'S RECORD"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="9sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             android:paddingBottom="6dp" />
 
@@ -537,7 +567,7 @@
             android:text="APPROVED :  00\nREJECTED :  00\nMISTAKES :  00\nPENDING  :  00"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/inter"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
 
     </LinearLayout>
@@ -564,7 +594,7 @@
             android:text="══ MEMO ══"
             android:textColor="#4DB868"
             android:fontFamily="@font/courier_prime"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:gravity="center"
             android:paddingBottom="10dp" />
@@ -576,7 +606,7 @@
             android:text="OBJECTIVES ─ DAY 1"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:paddingBottom="5dp" />
 
@@ -587,7 +617,7 @@
             android:text=""
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="11sp"
+            android:textSize="13sp"
             android:lineSpacingExtra="3dp"
             android:paddingBottom="10dp" />
 
@@ -600,7 +630,7 @@
             android:text="MISTAKES REMAINING"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:paddingBottom="5dp" />
 
@@ -611,7 +641,7 @@
             android:text="●  ●  ●"
             android:textColor="#FF6B6B"
             android:fontFamily="@font/courier_prime"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:paddingBottom="10dp" />
 
     </LinearLayout>
@@ -622,8 +652,8 @@
 
     <FrameLayout
         android:id="@+id/right_tab_handle"
-        android:layout_width="28dp"
-        android:layout_height="64dp"
+        android:layout_width="36dp"
+        android:layout_height="72dp"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="174dp"
         android:background="@drawable/ic_flag_green"
@@ -631,14 +661,14 @@
         android:clipChildren="false"
         android:clipToPadding="false">
         <TextView
-            android:layout_width="60dp"
-            android:layout_height="22dp"
+            android:layout_width="72dp"
+            android:layout_height="26dp"
             android:layout_gravity="center"
             android:rotation="90"
             android:text="MEMO"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="8sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center"
             android:singleLine="true" />
@@ -646,8 +676,9 @@
 
     <FrameLayout
         android:id="@+id/left_tab_handle"
-        android:layout_width="28dp"
-        android:layout_height="64dp"
+        android:visibility="gone"
+        android:layout_width="36dp"
+        android:layout_height="72dp"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="100dp"
         android:background="@drawable/ic_flag_blue"
@@ -655,14 +686,14 @@
         android:clipChildren="false"
         android:clipToPadding="false">
         <TextView
-            android:layout_width="60dp"
-            android:layout_height="22dp"
+            android:layout_width="72dp"
+            android:layout_height="26dp"
             android:layout_gravity="center"
             android:rotation="90"
             android:text="SKILLS"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/courier_prime"
-            android:textSize="8sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center"
             android:singleLine="true" />
@@ -709,7 +740,7 @@
                 android:text="DAY 1 BRIEFING"
                 android:textColor="#3A2A00"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="13sp"
+                android:textSize="19sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:paddingBottom="4dp" />
@@ -721,7 +752,7 @@
                 android:text="MEMO FROM HR DEPARTMENT"
                 android:textColor="#7A5C00"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="8sp"
+                android:textSize="13sp"
                 android:gravity="center"
                 android:paddingBottom="14dp" />
 
@@ -732,17 +763,25 @@
                 android:background="#CC9922"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Today's rules — injected dynamically -->
-            <TextView
-                android:id="@+id/tv_briefing_rules"
+            <!-- Today's rules — scrollable -->
+            <ScrollView
+                android:id="@+id/briefing_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#3A2A00"
-                android:fontFamily="@font/courier_prime"
-                android:textSize="10sp"
-                android:lineSpacingExtra="5dp"
-                android:paddingBottom="16dp" />
+                android:fadeScrollbars="false">
+
+                <TextView
+                    android:id="@+id/tv_briefing_rules"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#3A2A00"
+                    android:fontFamily="@font/courier_prime"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingBottom="16dp" />
+
+            </ScrollView>
 
             <!-- Divider -->
             <View
@@ -760,7 +799,7 @@
                 android:background="#CC9922"
                 android:textColor="#FFFFFF"
                 android:fontFamily="@font/courier_prime"
-                android:textSize="11sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:stateListAnimator="@null"
                 android:letterSpacing="0.04" />
@@ -784,7 +823,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="@font/courier_prime"
             android:textColor="#FFFFFF"
@@ -836,7 +875,7 @@
                     android:text="DAY COMPLETE"
                     android:textColor="#3A2A00"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:paddingBottom="10dp" />
@@ -854,7 +893,7 @@
                     android:text=""
                     android:textColor="#3A2A00"
                     android:fontFamily="@font/inter"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:lineSpacingExtra="5dp"
                     android:paddingBottom="16dp" />
 
@@ -866,7 +905,7 @@
                     android:background="@drawable/btn_approve"
                     android:textColor="#FFFFFF"
                     android:fontFamily="@font/courier_prime"
-                    android:textSize="13sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:stateListAnimator="@null" />
 

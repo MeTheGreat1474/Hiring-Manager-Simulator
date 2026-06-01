@@ -36,10 +36,7 @@ public class ApplicantGenerator {
             "Shopee Malaysia", "Lazada Group", "Maxis Communications", "Celcom Axiata"
     };
 
-    private static final String[] BLACKLISTED_COMPANIES = {
-            "RedFlag Corp", "Nexus Offshore Ltd", "ShadowTech Ventures",
-            "Phantom Solutions", "DarkHorse Analytics"
-    };
+
 
     private static final String[][] ROLES_BY_DEPT = {
             {"Engineering",    "Software Engineer", "Backend Engineer", "DevOps Engineer", "Full Stack Engineer"},
@@ -189,8 +186,11 @@ public class ApplicantGenerator {
                 // Forgeries only from Day 4+ — magnifier not yet available earlier
                 if (config.dayNumber >= 4) active.add(ViolationType.FALSIFIED_EXPERIENCE);
             }
-            if (label.contains("blacklisted"))   active.add(ViolationType.BLACKLISTED_COMPANY);
-            if (label.contains("prior offense")) active.add(ViolationType.PRIOR_OFFENSE);
+            if (r instanceof Rules.BlacklistRule) active.add(ViolationType.BLACKLISTED_COMPANY);
+            if (r instanceof Rules.GradeRule) {
+                active.add(ViolationType.WRONG_GRADE);
+                active.add(ViolationType.FALSIFIED_GRADE);
+            }
             // Typed rules — use instanceof so constraints are readable by the generator
             if (r instanceof Rules.UniversityRule) active.add(ViolationType.WRONG_UNIVERSITY);
             if (r instanceof Rules.SkillRule)      active.add(ViolationType.MISSING_REQUIRED_SKILL);
@@ -243,7 +243,7 @@ public class ApplicantGenerator {
         int bulletCat = dept.equals("Engineering") || dept.equals("Infrastructure") ? 0
                       : dept.equals("Data Science") ? 1 : 2;
 
-        List<JobEntry> jobs = buildJobHistory(actualExp, displayedExp, blacklisted, bulletCat);
+        List<JobEntry> jobs = buildJobHistory(config, actualExp, displayedExp, blacklisted, bulletCat);
 
         // Education — pick university based on violation
         String uni, uniLoc;
@@ -325,14 +325,14 @@ public class ApplicantGenerator {
                 .build();
     }
 
-    private List<JobEntry> buildJobHistory(float actualExp, float displayedExp,
+    private List<JobEntry> buildJobHistory(DayConfig config, float actualExp, float displayedExp,
                                            boolean blacklisted, int bulletCat) {
         List<JobEntry> jobs = new ArrayList<>();
         int currentYear = 2025;
         float remaining = displayedExp;
 
         // Job 1 — most recent
-        String company1 = blacklisted ? pick(BLACKLISTED_COMPANIES) : pick(LEGIT_COMPANIES);
+        String company1 = blacklisted ? pickBlacklisted(config) : pick(LEGIT_COMPANIES);
         int dur1   = Math.max(1, Math.round(remaining * 0.55f));
         int start1 = currentYear - dur1;
         jobs.add(new JobEntry(
@@ -438,6 +438,18 @@ public class ApplicantGenerator {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) sb.append(rng.nextInt(10));
         return sb.toString();
+    }
+
+
+    /** Returns a random blacklisted company name from the day's BlacklistRule, or a fallback. */
+    private String pickBlacklisted(DayConfig config) {
+        for (com.example.hiringmanagersimulator.rules.Rule r : config.getRules()) {
+            if (r instanceof Rules.BlacklistRule) {
+                List<String> list = ((Rules.BlacklistRule) r).companies;
+                if (!list.isEmpty()) return list.get(rng.nextInt(list.size()));
+            }
+        }
+        return DayConfig.BLACKLISTED_COMPANIES[rng.nextInt(DayConfig.BLACKLISTED_COMPANIES.length)];
     }
 
     // ─── University helpers ────────────────────────────────────────────────────
